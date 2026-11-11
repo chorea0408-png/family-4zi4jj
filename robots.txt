@@ -1,4 +1,4 @@
 # TODO(질문): robots.txt는 사이트 맨 위(도메인 바로 아래)에 있어야 검색 로봇이 읽음. 이 폴더 안에 두면 효과가 없을 수 있어서, 배포 위치를 확인해야 함.
 # TODO(질문): 폴더 이름 family-k7q2xm은 임시값. T0에서 정한 6글자 이름으로 바꿔야 함.
 User-agent: *
-Disallow: /family-k7q2xm/
+Disallow: /family-4zi4jj/
