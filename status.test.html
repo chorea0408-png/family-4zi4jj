@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>status.js 테스트</title>
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <p>브라우저 콘솔에서 PASS / FAIL을 확인하세요.</p>
+
+  <!-- data.js가 쓰는 전역 PapaParse -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script type="module">
+    import { getStatus } from './status.js';
+    import { buildData } from './data.js';
+    import { DEFAULT_CITIES_CSV, DEFAULT_DAYS_CSV } from './data.default.js';
+
+    const data = buildData(DEFAULT_CITIES_CSV, DEFAULT_DAYS_CSV);
+
+    // 상태 로직 탭 4장의 테스트 표(9행). null은 표의 "–".
+    const CASES = [
+      { date: '2026-11-09', phase: 'before',    city: null,         prevCity: null,         moving: false, dayNumber: null, daysUntilStart: 1 },
+      { date: '2026-11-10', phase: 'traveling', city: 'budapest-1', prevCity: null,         moving: true,  dayNumber: 1 },
+      { date: '2026-11-12', phase: 'traveling', city: 'budapest-1', prevCity: null,         moving: true,  dayNumber: 3 },
+      { date: '2026-11-13', phase: 'traveling', city: 'prague',     prevCity: 'budapest-1', moving: false, dayNumber: 4 },
+      { date: '2026-11-16', phase: 'traveling', city: 'salzburg',   prevCity: 'prague',     moving: true,  dayNumber: 7 },
+      { date: '2026-11-25', phase: 'traveling', city: 'budapest-2', prevCity: 'vienna',     moving: true,  dayNumber: 16 },
+      { date: '2026-12-01', phase: 'traveling', city: 'budapest-2', prevCity: null,         moving: true,  dayNumber: 22 },
+      { date: '2026-12-02', phase: 'home',      city: null,         prevCity: 'budapest-2', moving: false, dayNumber: 23 },
+      { date: '2026-12-03', phase: 'after',     city: null,         prevCity: null,         moving: false, dayNumber: null },
+    ];
+
+    let failed = 0;
+    for (const expected of CASES) {
+      const s = getStatus(expected.date, data);
+      const actual = {
+        phase: s.phase,
+        city: s.city ? s.city.city_id : null,
+        prevCity: s.prevCity ? s.prevCity.city_id : null,
+        moving: s.moving,
+        dayNumber: s.dayNumber,
+      };
+      const wanted = {
+        phase: expected.phase,
+        city: expected.city,
+        prevCity: expected.prevCity,
+        moving: expected.moving,
+        dayNumber: expected.dayNumber,
+      };
+      // daysUntilStart는 before일 때만 값이 있음
+      if ('daysUntilStart' in expected) {
+        actual.daysUntilStart = s.daysUntilStart;
+        wanted.daysUntilStart = expected.daysUntilStart;
+      }
+      const pass = JSON.stringify(actual) === JSON.stringify(wanted);
+      if (!pass) failed++;
+      console.log(`${pass ? 'PASS' : 'FAIL'} ${expected.date}`, pass ? '' : { expected: wanted, actual });
+    }
+    console.log(failed === 0 ? `ALL PASS (${CASES.length}/${CASES.length})` : `${failed}개 FAIL`);
+  </script>
+</body>
+</html>
