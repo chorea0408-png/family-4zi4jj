@@ -22,7 +22,7 @@ export const DEFAULT_DAYS_CSV = `date,city_id,plan,news,move
 2026-11-17,salzburg,,,
 2026-11-18,venice,,,기차로 베네치아 이동
 2026-11-19,venice,,,
-2026-11-20,venice,,,
+2026-11-20,venice,돌로미티 뇨미투어 (아우론쪼·미수리나·코르티나·모시고 호수),메스트레역 출발·복귀 차량 이동 총 327.4km 완주,
 2026-11-21,vienna,,,기차로 빈 이동
 2026-11-22,vienna,,,
 2026-11-23,vienna,,,
