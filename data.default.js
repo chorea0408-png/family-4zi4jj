@@ -18,7 +18,7 @@ export const DEFAULT_DAYS_CSV = `date,city_id,plan,news,move
 2026-11-13,prague,프라하 도착,,
 2026-11-14,prague,,,
 2026-11-15,prague,,,
-2026-11-16,salzburg,,,셔틀밴으로 체스키 크룸로프를 거쳐 잘츠부르크 이동
+2026-11-16,salzburg,체스키 크룸로프·고사우제·할슈타트 투어,프라하 출발·잘츠부르크 도착 차량 이동 총 484.7km,셔틀밴으로 체스키 크룸로프를 거쳐 잘츠부르크 이동
 2026-11-17,salzburg,,,
 2026-11-18,venice,,,기차로 베네치아 이동
 2026-11-19,venice,,,
